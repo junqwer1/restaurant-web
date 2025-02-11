@@ -19,18 +19,20 @@ const RestaurantContainer = () => {
   const [search, setSearch] = useState<SearchType | undefined>()
   const [categories, setCategories] = useState<string[]>([])
 
-  useEffect(() => {
+  useEffect(() => {}, [categories]) // 분류가 변경될때 마다 바로바로 조회 내용 반영
 
-  }, [categories]) // 분류가 변경될때 마다 바로바로 조회 내용 반영
-  
   const onChange = useCallback((e) => {
-    setSearch(search => ({...search, [e.target.name]: e.target.value}))
+    setSearch((search) => ({ ...search, [e.target.name]: e.target.value }))
   }, [])
 
   const onTabClick = useCallback((category) => {
-    setCategories(categories => {
+    setCategories((categories) => {
       const set = new Set(categories)
-      set.add(category)
+      if (set.has(category)) {
+        set.delete(category)
+      } else {
+        set.add(category)
+      }
 
       return [...set.values()]
     })
@@ -38,13 +40,12 @@ const RestaurantContainer = () => {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault()
-
   }, [])
 
   return (
     <>
-    <CategoryTabs categories={categories} onClick={onTabClick}/>
-      <SearchForm form={search} onChange={onChange} onSubmit={onSubmit}/>
+      <CategoryTabs categories={categories} onClick={onTabClick} />
+      <SearchForm form={search} onChange={onChange} onSubmit={onSubmit} />
       <KakaoMap />
       <RestaurantItems />
     </>
