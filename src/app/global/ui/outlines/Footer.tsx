@@ -2,9 +2,10 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import colors from '../../styles/colors'
+import { CommonType } from '../../types/StyledType'
 const { dark, light } = colors
 
-const StyledFooter = styled.footer`
+const StyledFooter = styled.footer<CommonType>`
   background: ${dark};
   min-height: 200px;
   color: ${light};
