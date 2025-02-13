@@ -4,8 +4,10 @@ import CategoryTabs from '../components/CategoryTabs'
 import SearchForm from '../components/SearchForm'
 import KakaoMap from '@/app/global/components/KakaoMap'
 import RestaurantItems from '../components/RestaurantItems'
+import { getList } from '../services/actions'
 
 type SearchType = {
+  mode: 'current' | 'search'
   sido?: string
   sigugun?: string
   category?: string[]
@@ -16,10 +18,32 @@ type SearchType = {
 }
 
 const RestaurantContainer = () => {
-  const [search, setSearch] = useState<SearchType | undefined>()
+  const [search, setSearch] = useState<SearchType>({ mode: 'current' })
   const [categories, setCategories] = useState<string[]>([])
+  const [items, setItems] = useState<any>([])
 
-  useEffect(() => {}, [categories]) // 분류가 변경될때 마다 바로바로 조회 내용 반영
+  useEffect(() => {
+    
+  }, [search])
+
+  useEffect(() => {
+    setSearch(search => ({...search, category: categories}))
+  }, [categories]) // 분류가 변경될때 마다 바로바로 조회 내용 반영
+
+  useEffect(() => {
+    const { mode, limit, lat, lon } = search
+    if (mode === 'current' && !lat && !lon) {
+      //위치 기반일 때 현재 사용자의 위도, 경도 좌표 조회
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setSearch((search) => ({
+          ...search,
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude,
+          limit: limit < 1 ? 50 : limit,
+        }))
+      })
+    }
+  }, [search])
 
   const onChange = useCallback((e) => {
     setSearch((search) => ({ ...search, [e.target.name]: e.target.value }))
