@@ -21,6 +21,8 @@ export const getList = async (search) => {
     delete search.sigugun
 
     apiUrl = process.env.RESTAURANT_URL + '/search'
+
+    if (!search.lat || !search.lon) return []
   }
 
   const qs = toQueryString(search)
