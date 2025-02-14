@@ -5,13 +5,13 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import colors from '@/app/global/styles/colors'
 import sizes from '@/app/global/styles/sizes'
 const { info, dark, white, danger } = colors
-const { medium, big } = sizes
+const { big, medium } = sizes
 
 const StyledUl = styled.ul<CommonType>`
   li {
     box-shadow: 2px 2px 5px ${dark};
     padding: 50px;
-    border-radius: 15px
+    border-radius: 15px;
     font-size: ${medium};
     position: relative;
 
@@ -28,20 +28,20 @@ const StyledUl = styled.ul<CommonType>`
         margin-right: 15px;
       }
     }
-
   }
-    li + li {
-      margin-top: 25px;
-    }
 
-    svg {
-      position: absolute;
-      top: 40px;
-      right: 40px;
-      font-size: 2.75rem;
-      cursor: pointer;
-      color: ${danger};
-    }
+  li + li {
+    margin-top: 25px;
+  }
+
+  svg {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    font-size: 2.75rem;
+    cursor: pointer;
+    color: ${danger};
+  }
 `
 
 const ListItem = ({ item, onClick }) => {

@@ -6,6 +6,7 @@ import KakaoMap from '@/app/global/components/KakaoMap'
 import RestaurantItems from '../components/RestaurantItems'
 import { getList } from '../services/actions'
 import { List } from 'react-content-loader'
+import Messages from '@/app/global/components/Messages'
 
 const Loading = () => <List />
 
@@ -124,8 +125,10 @@ const RestaurantContainer = () => {
       )}
       {loading ? (
         <Loading />
+      ) : items && items.length > 0 ? (
+        <RestaurantItems items={items} onClick={onMoveToLocation} />
       ) : (
-        items && items.length > 0 && <RestaurantItems items={items} onClick={onMoveToLocation} />
+        <Messages color="info">조회된 식당이 없습니다.</Messages>
       )}
     </>
   )
